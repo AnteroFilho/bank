@@ -22,6 +22,16 @@ public class UI {
 		return choice;
 	}
 	
+	public static int initialScreen(int opt) {
+		System.out.println("Hello! welcome to Java Bank.");
+		System.out.println("--------------------------------------------------");
+		System.out.println("to sign in please press: 1");
+		System.out.println("to create an account please press: 2");	
+		System.out.println("to exit please press: 3");
+		int choice = opt;
+		return choice;
+	}
+	
 	public static Account logInScreen() {
 		clearScreen();
 		System.out.print("Account: ");
@@ -37,8 +47,7 @@ public class UI {
 		System.out.println("1 - balance.");
 		System.out.println("2 - deposit");
 		System.out.println("3 - withdraw");
-		System.out.println("4 - log out");
-		System.out.println("5 - exit");
+		System.out.println("4 - log out");		
 		int option = sc.nextInt();
 		Program.option(option, acc);
 		

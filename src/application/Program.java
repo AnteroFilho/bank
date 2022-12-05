@@ -12,22 +12,30 @@ public class Program {
 	public static void main(String[] args) {
 
 		Locale.setDefault(Locale.US);
+
+		runProgram(UI.initialScreen());
+		clearScreen();
+
+		System.out.println("funfou");
+
+	}
+
+	public static void runProgram(int opt) {
+		Integer choice = opt;
 		Scanner sc = new Scanner(System.in);
 		List<Account> accounts = new ArrayList<>();
-
-		Integer choice = UI.initialScreen();
 		boolean acessACC = false;
 		boolean acessPSS = false;
 
 		while (choice != 3) {
 
 			if (choice == 1) {
-				
+
 				while (acessACC == false && acessPSS == false) {
 					clearScreen();
 					while (acessACC == false) {
 						System.out.print("Account: ");
-						int acc = sc.nextInt();						
+						int acc = sc.nextInt();
 						for (Account account : accounts) {
 							if (acc == account.getAccNumber()) {
 								acessACC = true;
@@ -45,7 +53,7 @@ public class Program {
 						for (Account account : accounts) {
 							if (pss.equals(account.getPassword())) {
 								acessPSS = true;
-								int index = accounts.indexOf(account);								
+								int index = accounts.indexOf(account);
 								System.out.println("ACESS GRANTED!");
 								UI.initialPage(accounts.get(index));
 							}
@@ -56,7 +64,6 @@ public class Program {
 					}
 
 				}
-				
 
 			} else if (choice == 2) {
 				clearScreen();
@@ -77,11 +84,9 @@ public class Program {
 
 				accounts.add(new Account(name, accNumber, password, balance));
 				choice = UI.initialScreen();
+
 			}
 		}
-		clearScreen();
-
-		System.out.println("funfou");
 		sc.close();
 	}
 
@@ -89,24 +94,43 @@ public class Program {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
-	
+
 	public static void option(int opt, Account acc) {
 		switch (opt) {
 		case 1:
 			System.out.println("Balance: $$" + String.format("%.2f", acc.getBalance()));
-			System.out.println("press 1 to go back");
+			System.out.print("press 1 to go back");
 			new Scanner(System.in).next();
 			UI.initialPage(acc);
 			break;
-		
+
 		case 2:
-			System.out.println("type in the deposit amount:");
+			System.out.print("type in the deposit amount:");
 			double amount = new Scanner(System.in).nextDouble();
 			acc.deposit(amount);
 			System.out.println("Sucess, new balance is: $$ " + String.format("%.2f", acc.getBalance()));
+			System.out.print("press 1 to go back");
+			new Scanner(System.in).next();
+			UI.initialPage(acc);
+			break;
+
+		case 3:
+			System.out.print("type in the withdraw amount:");
+			acc.withDraw(new Scanner(System.in).nextDouble());
+			System.out.println("Sucess, new balance is: $$ " + String.format("%.2f", acc.getBalance()));
+			System.out.print("press 1 to go back");
+			new Scanner(System.in).next();
+			UI.initialPage(acc);
+			break;
+
+		case 4:
+			runProgram(UI.initialScreen());
+			break;		
+
+		default:
+			System.out.println("Ivalid option, try again!");
+			UI.initialPage(acc);
 		}
 	}
-
-	
 
 }
